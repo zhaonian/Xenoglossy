@@ -9,38 +9,31 @@ import SwiftUI
 
 @main
 struct XenoglossyApp: App {
-    
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        MenuBarExtra("Xenoglossy", systemImage: "pawprint") {
+            Button("Quit") {
+                NSApplication.shared.terminate(nil)
+            }
         }
     }
 }
 
-
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
-    var statusItem: NSStatusItem!
-    
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Create the status bar item
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+        // Hide the dock icon
+        NSApp.setActivationPolicy(.accessory)
         
-        // Set the icon and behavior
-        if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "gear", accessibilityDescription: "Xenoglossy")
-        }
+        // Check accessibility permissions
+        AccessibilityManager.shared.checkPermissions()
         
-        // Create a menu for the status bar item
-        let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Settings", action: #selector(quitApp), keyEquivalent: "s"))
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quitApp), keyEquivalent: "q"))
-        statusItem.menu = menu
+        // Register for keyboard shortcut
+        KeyboardShortcutManager.shared.registerShortcut()
     }
     
-    @objc func quitApp() {
-        NSApplication.shared.terminate(self)
+    func applicationWillTerminate(_ notification: Notification) {
+        // Clean up the keyboard shortcut manager
+        KeyboardShortcutManager.shared.cleanup()
     }
 }
