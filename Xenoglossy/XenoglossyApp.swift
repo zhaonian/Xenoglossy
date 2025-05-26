@@ -7,33 +7,79 @@
 
 import SwiftUI
 
+extension Notification.Name {
+    static let showAPIKeyConfig = Notification.Name("showAPIKeyConfig")
+}
+
 @main
 struct XenoglossyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @StateObject private var openAIManager = OpenAIManager.shared
+    @State private var showingAPIKeyConfig = false
     
     var body: some Scene {
-        MenuBarExtra("Xenoglossy", systemImage: "pawprint") {
+        MenuBarExtra("Xenoglossy", systemImage: "wand.and.stars") {
+            if openAIManager.isConfigured {
+                Button("Change API Key") {
+                    showConfigWindow()
+                }
+            } else {
+                Button("Configure API Key") {
+                    showConfigWindow()
+                }
+            }
+            
+            Divider()
+            
             Button("Quit") {
                 NSApplication.shared.terminate(nil)
             }
         }
     }
+    
+    private func showConfigWindow() {
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.center()
+        window.title = "OpenAI API Key Configuration"
+        window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
+        window.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
+    }
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Hide the dock icon
-        NSApp.setActivationPolicy(.accessory)
-        
-        // Check accessibility permissions
-        AccessibilityManager.shared.checkPermissions()
-        
-        // Register for keyboard shortcut
         KeyboardShortcutManager.shared.registerShortcut()
+        
+        // Set up notification observer
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleShowAPIKeyConfig),
+            name: .showAPIKeyConfig,
+            object: nil
+        )
+    }
+    
+    @objc private func handleShowAPIKeyConfig() {
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
+            styleMask: [.titled, .closable],
+            backing: .buffered,
+            defer: false
+        )
+        window.center()
+        window.title = "OpenAI API Key Configuration"
+        window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
+        window.makeKeyAndOrderFront(nil)
+        NSApp.activate(ignoringOtherApps: true)
     }
     
     func applicationWillTerminate(_ notification: Notification) {
-        // Clean up the keyboard shortcut manager
         KeyboardShortcutManager.shared.cleanup()
     }
 }

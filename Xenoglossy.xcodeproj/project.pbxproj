@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		F891F49E2DE403CD00341662 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = F891F49D2DE403CD00341662 /* OpenAI */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		59F3325A2DD4121E00E85922 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F891F49E2DE403CD00341662 /* OpenAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = Xenoglossy;
 			packageProductDependencies = (
+				F891F49D2DE403CD00341662 /* OpenAI */,
 			);
 			productName = Xenoglossy;
 			productReference = 59F3324B2DD4121D00E85922 /* Xenoglossy.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 59F332422DD4121D00E85922;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				F891F49C2DE403CD00341662 /* XCRemoteSwiftPackageReference "OpenAI" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 59F3324C2DD4121D00E85922 /* Products */;
 			projectDirPath = "";
@@ -553,6 +562,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		F891F49C2DE403CD00341662 /* XCRemoteSwiftPackageReference "OpenAI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/MacPaw/OpenAI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		F891F49D2DE403CD00341662 /* OpenAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F891F49C2DE403CD00341662 /* XCRemoteSwiftPackageReference "OpenAI" */;
+			productName = OpenAI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 59F332432DD4121D00E85922 /* Project object */;
 }

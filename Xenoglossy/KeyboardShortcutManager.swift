@@ -42,45 +42,74 @@ class KeyboardShortcutManager {
     }
     
     func handleHotKey() {
-        // First, try to select the current word or line
-        // Press Cmd+A to select all text in the current field
-        let cmdADown = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: true)
-        let cmdAUp = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: false)
-        cmdADown?.flags = .maskCommand
-        cmdAUp?.flags = .maskCommand
-        cmdADown?.post(tap: .cghidEventTap)
-        cmdAUp?.post(tap: .cghidEventTap)
+        // Select all text
+        let keyDown = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: true)
+        let keyUp = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: false)
+        keyDown?.flags = .maskCommand
+        keyUp?.flags = .maskCommand
+        keyDown?.post(tap: .cghidEventTap)
+        keyUp?.post(tap: .cghidEventTap)
         
-        // Chain the operations using DispatchQueue
+        // Copy selected text
+        let copyDown = CGEvent(keyboardEventSource: source, virtualKey: 0x08, keyDown: true)
+        let copyUp = CGEvent(keyboardEventSource: source, virtualKey: 0x08, keyDown: false)
+        copyDown?.flags = .maskCommand
+        copyUp?.flags = .maskCommand
+        copyDown?.post(tap: .cghidEventTap)
+        copyUp?.post(tap: .cghidEventTap)
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [self] in
-            // Press Cmd+C to copy the selected text
-            let cmdCDown = CGEvent(keyboardEventSource: self.source, virtualKey: 0x08, keyDown: true)
-            let cmdCUp = CGEvent(keyboardEventSource: self.source, virtualKey: 0x08, keyDown: false)
-            cmdCDown?.flags = .maskCommand
-            cmdCUp?.flags = .maskCommand
-            cmdCDown?.post(tap: .cghidEventTap)
-            cmdCUp?.post(tap: .cghidEventTap)
+            // Get the current pasteboard
+            let pasteboard = NSPasteboard.general
             
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [self] in
-                // Get the current pasteboard
-                let pasteboard = NSPasteboard.general
-                
-                // Get the current selected text
-                if let selectedText = pasteboard.string(forType: .string), !selectedText.isEmpty {
-                    // Create new text with Meow appended
-                    let newText = selectedText + "Meow"
-                    
-                    // Set the new text back to the pasteboard
-                    pasteboard.clearContents()
-                    pasteboard.setString(newText, forType: .string)
-                    
-                    // Press Cmd+V to paste
-                    let cmdVDown = CGEvent(keyboardEventSource: self.source, virtualKey: 0x09, keyDown: true)
-                    let cmdVUp = CGEvent(keyboardEventSource: self.source, virtualKey: 0x09, keyDown: false)
-                    cmdVDown?.flags = .maskCommand
-                    cmdVUp?.flags = .maskCommand
-                    cmdVDown?.post(tap: .cghidEventTap)
-                    cmdVUp?.post(tap: .cghidEventTap)
+            // Get the current selected text
+            if let selectedText = pasteboard.string(forType: .string), !selectedText.isEmpty {
+                // Transform the text using OpenAI
+                Task {
+                    do {
+                        let transformedText = try await OpenAIManager.shared.transformText(selectedText)
+                        
+                        // Set the new text back to the pasteboard
+                        pasteboard.clearContents()
+                        pasteboard.setString(transformedText, forType: .string)
+                        
+                        // Paste the transformed text
+                        let pasteDown = CGEvent(keyboardEventSource: source, virtualKey: 0x09, keyDown: true)
+                        let pasteUp = CGEvent(keyboardEventSource: source, virtualKey: 0x09, keyDown: false)
+                        pasteDown?.flags = .maskCommand
+                        pasteUp?.flags = .maskCommand
+                        pasteDown?.post(tap: .cghidEventTap)
+                        pasteUp?.post(tap: .cghidEventTap)
+                    } catch let error as OpenAIError {
+                        DispatchQueue.main.async {
+                            let alert = NSAlert()
+                            alert.messageText = "Error"
+                            alert.informativeText = error.localizedDescription
+                            alert.alertStyle = .warning
+                            
+                            if case .invalidAPIKey = error {
+                                alert.addButton(withTitle: "Configure API Key")
+                                alert.addButton(withTitle: "Cancel")
+                                
+                                if alert.runModal() == .alertFirstButtonReturn {
+                                    // Post notification to show API key configuration
+                                    NotificationCenter.default.post(name: .showAPIKeyConfig, object: nil)
+                                }
+                            } else {
+                                alert.addButton(withTitle: "OK")
+                                alert.runModal()
+                            }
+                        }
+                    } catch {
+                        DispatchQueue.main.async {
+                            let alert = NSAlert()
+                            alert.messageText = "Error"
+                            alert.informativeText = "An unexpected error occurred: \(error.localizedDescription)"
+                            alert.alertStyle = .warning
+                            alert.addButton(withTitle: "OK")
+                            alert.runModal()
+                        }
+                    }
                 }
             }
         }
