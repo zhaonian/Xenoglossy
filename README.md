@@ -1,5 +1,15 @@
 # Xenoglossy
 
+Instantly change the tone of your text and correct grammar with one single keystroke in any app on macOS.
+
+## Features
+
+- Transform text with a single keyboard shortcut (⌃ + X)
+- Choose between OpenAI and Gemini models
+- Multiple tone options (Professional, Casual, Academic, etc.)
+- Works in any app on macOS
+- Menu bar app for easy access
+
 ## API Key Configuration
 
 The app uses API keys for both OpenAI and Gemini. To set up your development environment:
