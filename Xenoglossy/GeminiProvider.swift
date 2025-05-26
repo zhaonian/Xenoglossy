@@ -16,6 +16,10 @@ class GeminiProvider: LLMProvider {
             maxOutputTokens: 1024
         )
         
+        // For local development, use the provided apiKey
+        // For Xcode Cloud, use the environment variable
+        let apiKey = ProcessInfo.processInfo.environment["GEMINI_API_KEY"] ?? apiKey
+
         model = GenerativeModel(
             name: "gemini-2.0-flash",
             apiKey: apiKey,
@@ -34,7 +38,7 @@ class GeminiProvider: LLMProvider {
         
         let prompt = """
         \(tone.prompt)
-        IMPORTANT: Keep the exact same language as the input text. Do not translate or change the language. 
+        IMPORTANT: Keep the exact same language as the input text. Do not translate or change the language.
         Only return the transformed text. If you cannot transform just return the original text.
         
         \(text)
