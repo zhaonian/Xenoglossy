@@ -20,7 +20,7 @@ struct XenoglossyApp: App {
     
     var body: some Scene {
         MenuBarExtra("Xenoglossy", systemImage: "wand.and.stars") {
-            Button("Change LLM Model") {
+            Button("Change Model") {
                 showConfigWindow()
             }
             
@@ -58,7 +58,7 @@ struct XenoglossyApp: App {
             defer: false
         )
         window.center()
-        window.title = "LLM API Key Configuration"
+        window.title = "Xenoglossy Model Configuration"
         window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
         window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
