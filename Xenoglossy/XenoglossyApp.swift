@@ -15,6 +15,7 @@ extension Notification.Name {
 struct XenoglossyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var openAIManager = OpenAIManager.shared
+    @StateObject private var appState = AppState.shared
     @State private var showingAPIKeyConfig = false
     
     var body: some Scene {
@@ -26,6 +27,24 @@ struct XenoglossyApp: App {
             } else {
                 Button("Configure API Key") {
                     showConfigWindow()
+                }
+            }
+            
+            Divider()
+            
+            Text("Tone")
+                .font(.caption)
+                .foregroundColor(.secondary)
+            
+            ForEach(Tone.allCases, id: \.self) { tone in
+                Button(action: {
+                    appState.selectedTone = tone
+                }) {
+                    if tone == appState.selectedTone {
+                        Text("\(tone.rawValue) ✓")
+                    } else {
+                        Text(tone.rawValue)
+                    }
                 }
             }
             

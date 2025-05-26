@@ -1,10 +1,12 @@
 import Foundation
 import Carbon
 import AppKit
+import SwiftUI
 
 class KeyboardShortcutManager {
     private var eventHandler: EventHandlerRef?
     private let source = CGEventSource(stateID: .hidSystemState)
+    @ObservedObject private var appState = AppState.shared
     
     func registerShortcut() {
         var eventType = EventTypeSpec()
@@ -67,7 +69,7 @@ class KeyboardShortcutManager {
                 // Transform the text using OpenAI
                 Task {
                     do {
-                        let transformedText = try await OpenAIManager.shared.transformText(selectedText, tone: .professional)
+                        let transformedText = try await OpenAIManager.shared.transformText(selectedText, tone: appState.selectedTone)
                         
                         // Set the new text back to the pasteboard
                         pasteboard.clearContents()
