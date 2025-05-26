@@ -7,14 +7,13 @@ struct APIKeyConfigView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Select LLM Provider")
+            Text("Select LLM Model")
                 .font(.headline)
             
             VStack(alignment: .leading, spacing: 10) {
                 ForEach(LLMProviderType.allCases, id: \.self) { provider in
                     Button(action: {
                         llmManager.selectedProvider = provider
-                        window.close()
                     }) {
                         HStack {
                             Image(systemName: llmManager.selectedProvider == provider ? "circle.fill" : "circle")
