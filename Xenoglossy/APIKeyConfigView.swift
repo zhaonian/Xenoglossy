@@ -28,7 +28,7 @@ struct APIKeyConfigView: View {
             .padding()
         }
         .padding()
-        .frame(width: 200, height: 120)
+        .frame(width: 500, height: 240)
     }
 }
 

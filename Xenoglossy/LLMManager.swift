@@ -2,52 +2,39 @@ import Foundation
 import SwiftUI
 
 enum LLMProviderType: String, CaseIterable {
-    case openAI = "OpenAI"
-    case gemini = "Gemini"
+    case gemini = "Gemini-flash-2.0"
+    case openAI = "OpenAI-gpt-4.1-nano"
 }
 
 class LLMManager: ObservableObject {
     static let shared = LLMManager()
     
-    @Published var selectedProvider: LLMProviderType = .openAI {
+    @Published var selectedProvider: LLMProviderType = .gemini {
         didSet {
-            print("Provider changed from \(oldValue) to \(selectedProvider)")
             if oldValue != selectedProvider {
-                switchProvider(to: selectedProvider)
+                UserDefaults.standard.set(selectedProvider.rawValue, forKey: "selectedProvider")
             }
         }
     }
     
-    private var currentProvider: LLMProvider
-    
     private init() {
-        // Default to Gemini
-        currentProvider = GeminiProvider()
         loadSavedProvider()
     }
     
     private func loadSavedProvider() {
         if let savedProvider = UserDefaults.standard.string(forKey: "selectedProvider"),
            let provider = LLMProviderType(rawValue: savedProvider) {
-            print("Loading saved provider: \(provider)")
             selectedProvider = provider
-            switchProvider(to: provider)
         }
-    }
-    
-    func switchProvider(to type: LLMProviderType) {
-        print("Switching to provider: \(type)")
-        switch type {
-        case .openAI:
-            currentProvider = OpenAIProvider()
-        case .gemini:
-            currentProvider = GeminiProvider()
-        }
-        print("Switched to provider: \(currentProvider)")
-        UserDefaults.standard.set(type.rawValue, forKey: "selectedProvider")
     }
     
     func transformText(_ text: String, tone: Tone) async throws -> String {
-        return try await currentProvider.transformText(text, tone: tone)
+        let provider: LLMProvider = switch selectedProvider {
+        case .openAI:
+            OpenAIProvider()
+        case .gemini:
+            GeminiProvider()
+        }
+        return try await provider.transformText(text, tone: tone)
     }
 } 
