@@ -85,19 +85,18 @@ class OpenAIManager: ObservableObject {
         }
         
         let prompt = """
-        \(tone.userPrompt)
+        \(tone.prompt)
         
         \(text)
         """
         
         do {
-            guard let systemMessage = ChatQuery.ChatCompletionMessageParam(role: .system, content: tone.systemPrompt),
-                  let userMessage = ChatQuery.ChatCompletionMessageParam(role: .user, content: prompt) else {
+            guard let userMessage = ChatQuery.ChatCompletionMessageParam(role: .user, content: prompt) else {
                 throw OpenAIError.invalidResponse
             }
             
             let query = ChatQuery(
-                messages: [systemMessage, userMessage],
+                messages: [userMessage],
                 model: .gpt4_1_nano
             )
             
