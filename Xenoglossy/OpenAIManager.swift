@@ -79,19 +79,19 @@ class OpenAIManager: ObservableObject {
         isConfigured = false
     }
     
-    func transformText(_ text: String) async throws -> String {
+    func transformText(_ text: String, tone: Tone = .professional) async throws -> String {
         guard let openAI = openAI else {
             throw OpenAIError.apiKeyNotConfigured
         }
         
         let prompt = """
-        Make this text more professional and formal:
+        \(tone.userPrompt)
         
         \(text)
         """
         
         do {
-            guard let systemMessage = ChatQuery.ChatCompletionMessageParam(role: .system, content: "Transform text to be more professional while keeping the original meaning."),
+            guard let systemMessage = ChatQuery.ChatCompletionMessageParam(role: .system, content: tone.systemPrompt),
                   let userMessage = ChatQuery.ChatCompletionMessageParam(role: .user, content: prompt) else {
                 throw OpenAIError.invalidResponse
             }

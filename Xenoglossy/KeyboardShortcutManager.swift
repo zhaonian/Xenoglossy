@@ -67,7 +67,7 @@ class KeyboardShortcutManager {
                 // Transform the text using OpenAI
                 Task {
                     do {
-                        let transformedText = try await OpenAIManager.shared.transformText(selectedText)
+                        let transformedText = try await OpenAIManager.shared.transformText(selectedText, tone: .professional)
                         
                         // Set the new text back to the pasteboard
                         pasteboard.clearContents()
