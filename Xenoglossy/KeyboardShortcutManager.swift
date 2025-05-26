@@ -3,43 +3,58 @@ import Carbon
 import AppKit
 import SwiftUI
 
+// Helper function to create a four-character code
+private func fourCharCode(_ string: String) -> OSType {
+    var result: OSType = 0
+    if let data = string.data(using: .ascii) {
+        data.withUnsafeBytes { (ptr: UnsafeRawBufferPointer) in
+            for i in 0..<min(4, data.count) {
+                result = result << 8 + OSType(ptr[i])
+            }
+        }
+    }
+    return result
+}
+
 class KeyboardShortcutManager {
+    static let shared = KeyboardShortcutManager()
+    
     private var eventHandler: EventHandlerRef?
+    private let shortcutKey = UInt32(kVK_ANSI_X)
+    private let modifierFlags = UInt32(controlKey)
     private let source = CGEventSource(stateID: .hidSystemState)
     @ObservedObject private var appState = AppState.shared
     @ObservedObject private var llmManager = LLMManager.shared
     
+    private init() {}
+    
     func registerShortcut() {
         var eventType = EventTypeSpec()
-        eventType.eventClass = OSType(kEventClassKeyboard)
-        eventType.eventKind = OSType(kEventHotKeyPressed)
+        eventType.eventClass = UInt32(kEventClassKeyboard)
+        eventType.eventKind = UInt32(kEventHotKeyPressed)
         
-        // Create the hot key
-        var hotKeyID = EventHotKeyID()
-        hotKeyID.signature = OSType(0x4D45) // 'ME'
-        hotKeyID.id = UInt32(1)
-        
-        // Register the hot key (Ctrl + Cmd + 1)
-        var hotKeyRef: EventHotKeyRef?
-        RegisterEventHotKey(
-            UInt32(kVK_ANSI_1),
-            UInt32(controlKey | cmdKey),
-            hotKeyID,
-            GetApplicationEventTarget(),
-            0,
-            &hotKeyRef
-        )
-        
-        // Install the event handler
         InstallEventHandler(
             GetApplicationEventTarget(),
-            { (_, eventRef, _) -> OSStatus in
+            { (_, event, _) -> OSStatus in
                 KeyboardShortcutManager.shared.handleHotKey()
                 return noErr
             },
             1,
             &eventType,
             nil,
+            &eventHandler
+        )
+        
+        var hotKeyID = EventHotKeyID()
+        hotKeyID.signature = fourCharCode("XENO")
+        hotKeyID.id = UInt32(1)
+        
+        RegisterEventHotKey(
+            shortcutKey,
+            modifierFlags,
+            hotKeyID,
+            GetApplicationEventTarget(),
+            0,
             &eventHandler
         )
     }
@@ -114,8 +129,4 @@ class KeyboardShortcutManager {
             RemoveEventHandler(handler)
         }
     }
-    
-    // Singleton instance
-    static let shared = KeyboardShortcutManager()
-    private init() {}
 } 
