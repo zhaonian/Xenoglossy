@@ -2,13 +2,13 @@ import Foundation
 import GoogleGenerativeAI
 
 class GeminiProvider: LLMProvider {
-    private var model: GenerativeModel?
+    private let apiKey: String
     
-    var isConfigured: Bool {
-        return model != nil
+    init() {
+        apiKey = ProcessInfo.processInfo.environment["GEMINI_API_KEY"] ?? Config.geminiKey
     }
     
-    func configure(apiKey: String) {
+    func transformText(_ text: String, tone: Tone) async throws -> String {
         let config = GenerationConfig(
             temperature: 0.7,
             topP: 0.8,
@@ -16,25 +16,11 @@ class GeminiProvider: LLMProvider {
             maxOutputTokens: 1024
         )
         
-        // For local development, use the provided apiKey
-        // For Xcode Cloud, use the environment variable
-        let apiKey = ProcessInfo.processInfo.environment["GEMINI_API_KEY"] ?? apiKey
-
-        model = GenerativeModel(
+        let model = GenerativeModel(
             name: "gemini-2.0-flash",
             apiKey: apiKey,
             generationConfig: config
         )
-    }
-    
-    func removeConfiguration() {
-        model = nil
-    }
-    
-    func transformText(_ text: String, tone: Tone) async throws -> String {
-        guard let model = model else {
-            throw LLMError.apiKeyNotConfigured
-        }
         
         let prompt = """
         \(tone.prompt)

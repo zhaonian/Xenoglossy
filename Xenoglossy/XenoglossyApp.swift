@@ -20,14 +20,8 @@ struct XenoglossyApp: App {
     
     var body: some Scene {
         MenuBarExtra("Xenoglossy", systemImage: "wand.and.stars") {
-            if llmManager.isConfigured {
-                Button("Change API Key") {
-                    showConfigWindow()
-                }
-            } else {
-                Button("Configure API Key") {
-                    showConfigWindow()
-                }
+            Button("Change LLM Model") {
+                showConfigWindow()
             }
             
             Divider()

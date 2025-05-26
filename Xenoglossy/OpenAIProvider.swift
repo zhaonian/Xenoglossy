@@ -8,18 +8,14 @@ class OpenAIProvider: LLMProvider {
     IMPORTANT: Return ONLY the transformed text without any explanations, options, or additional context.
     """
     
-    var isConfigured: Bool {
-        return openAI != nil
+    init() {
+        if let apiKey = ProcessInfo.processInfo.environment["OPENAI_API_KEY"] {
+            openAI = OpenAI(apiToken: apiKey)
+        } else {
+            openAI = OpenAI(apiToken: Config.openAIKey)
+        }
     }
-    
-    func configure(apiKey: String) {
-        openAI = OpenAI(apiToken: apiKey)
-    }
-    
-    func removeConfiguration() {
-        openAI = nil
-    }
-    
+
     func transformText(_ text: String, tone: Tone) async throws -> String {
         guard let openAI = openAI else {
             throw LLMError.apiKeyNotConfigured

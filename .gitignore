@@ -91,4 +91,7 @@ fastlane/test_output
 iOSInjectionProject/
 
 # macOS
-.DS_Store 
+.DS_Store
+
+# Configuration files
+Xenoglossy/Config.swift

@@ -1,9 +1,6 @@
 import Foundation
 
 protocol LLMProvider {
-    var isConfigured: Bool { get }
-    func configure(apiKey: String)
-    func removeConfiguration()
     func transformText(_ text: String, tone: Tone) async throws -> String
 }
 
