@@ -2,7 +2,7 @@ import SwiftUI
 import AppKit
 
 struct APIKeyConfigView: View {
-    @StateObject private var openAIManager = OpenAIManager.shared
+    @StateObject private var llmManager = LLMManager.shared
     @State private var apiKey: String = ""
     @State private var showingAlert = false
     @State private var alertMessage = ""
@@ -10,10 +10,22 @@ struct APIKeyConfigView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("OpenAI API Key Configuration")
+            Text("LLM API Key Configuration")
                 .font(.headline)
             
-            TextField("Enter your OpenAI API key", text: $apiKey)
+            Picker("Provider", selection: $llmManager.selectedProvider) {
+                ForEach(LLMProviderType.allCases, id: \.self) { provider in
+                    Text(provider.rawValue).tag(provider)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.horizontal)
+            .onChange(of: llmManager.selectedProvider) { newProvider in
+                // Clear the API key field when switching providers
+                apiKey = ""
+            }
+            
+            TextField("Enter your \(llmManager.selectedProvider.rawValue) API key", text: $apiKey)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
             
@@ -23,7 +35,7 @@ struct APIKeyConfigView: View {
                         alertMessage = "Please enter an API key"
                         showingAlert = true
                     } else {
-                        openAIManager.saveApiKey(apiKey)
+                        llmManager.configure(apiKey: apiKey)
                         window.close()
                     }
                 }

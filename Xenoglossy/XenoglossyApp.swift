@@ -14,13 +14,13 @@ extension Notification.Name {
 @main
 struct XenoglossyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var openAIManager = OpenAIManager.shared
+    @StateObject private var llmManager = LLMManager.shared
     @StateObject private var appState = AppState.shared
     @State private var showingAPIKeyConfig = false
     
     var body: some Scene {
         MenuBarExtra("Xenoglossy", systemImage: "wand.and.stars") {
-            if openAIManager.isConfigured {
+            if llmManager.isConfigured {
                 Button("Change API Key") {
                     showConfigWindow()
                 }
@@ -64,7 +64,7 @@ struct XenoglossyApp: App {
             defer: false
         )
         window.center()
-        window.title = "OpenAI API Key Configuration"
+        window.title = "LLM API Key Configuration"
         window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
         window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
@@ -92,7 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         window.center()
-        window.title = "OpenAI API Key Configuration"
+        window.title = "LLM API Key Configuration"
         window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
         window.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)

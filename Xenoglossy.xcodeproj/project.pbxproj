@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		F891F49E2DE403CD00341662 /* OpenAI in Frameworks */ = {isa = PBXBuildFile; productRef = F891F49D2DE403CD00341662 /* OpenAI */; };
+		F891F4CD2DE50E7600341662 /* GoogleGenerativeAI in Frameworks */ = {isa = PBXBuildFile; productRef = F891F4CC2DE50E7600341662 /* GoogleGenerativeAI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F891F49E2DE403CD00341662 /* OpenAI in Frameworks */,
+				F891F4CD2DE50E7600341662 /* GoogleGenerativeAI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			name = Xenoglossy;
 			packageProductDependencies = (
 				F891F49D2DE403CD00341662 /* OpenAI */,
+				F891F4CC2DE50E7600341662 /* GoogleGenerativeAI */,
 			);
 			productName = Xenoglossy;
 			productReference = 59F3324B2DD4121D00E85922 /* Xenoglossy.app */;
@@ -203,6 +206,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				F891F49C2DE403CD00341662 /* XCRemoteSwiftPackageReference "OpenAI" */,
+				F891F4CB2DE50E7600341662 /* XCRemoteSwiftPackageReference "generative-ai-swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 59F3324C2DD4121D00E85922 /* Products */;
@@ -576,6 +580,14 @@
 				minimumVersion = 0.4.3;
 			};
 		};
+		F891F4CB2DE50E7600341662 /* XCRemoteSwiftPackageReference "generative-ai-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/generative-ai-swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.5.6;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -583,6 +595,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F891F49C2DE403CD00341662 /* XCRemoteSwiftPackageReference "OpenAI" */;
 			productName = OpenAI;
+		};
+		F891F4CC2DE50E7600341662 /* GoogleGenerativeAI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F891F4CB2DE50E7600341662 /* XCRemoteSwiftPackageReference "generative-ai-swift" */;
+			productName = GoogleGenerativeAI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

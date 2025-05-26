@@ -7,6 +7,7 @@ class KeyboardShortcutManager {
     private var eventHandler: EventHandlerRef?
     private let source = CGEventSource(stateID: .hidSystemState)
     @ObservedObject private var appState = AppState.shared
+    @ObservedObject private var llmManager = LLMManager.shared
     
     func registerShortcut() {
         var eventType = EventTypeSpec()
@@ -66,10 +67,10 @@ class KeyboardShortcutManager {
             
             // Get the current selected text
             if let selectedText = pasteboard.string(forType: .string), !selectedText.isEmpty {
-                // Transform the text using OpenAI
+                // Transform the text using the selected LLM provider
                 Task {
                     do {
-                        let transformedText = try await OpenAIManager.shared.transformText(selectedText, tone: appState.selectedTone)
+                        let transformedText = try await llmManager.transformText(selectedText, tone: appState.selectedTone)
                         
                         // Set the new text back to the pasteboard
                         pasteboard.clearContents()
@@ -82,14 +83,14 @@ class KeyboardShortcutManager {
                         pasteUp?.flags = .maskCommand
                         pasteDown?.post(tap: .cghidEventTap)
                         pasteUp?.post(tap: .cghidEventTap)
-                    } catch let error as OpenAIError {
+                    } catch {
                         DispatchQueue.main.async {
                             let alert = NSAlert()
                             alert.messageText = "Error"
                             alert.informativeText = error.localizedDescription
                             alert.alertStyle = .warning
                             
-                            if case .invalidAPIKey = error {
+                            if case .apiKeyNotConfigured = error as? LLMError {
                                 alert.addButton(withTitle: "Configure API Key")
                                 alert.addButton(withTitle: "Cancel")
                                 
@@ -101,15 +102,6 @@ class KeyboardShortcutManager {
                                 alert.addButton(withTitle: "OK")
                                 alert.runModal()
                             }
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            let alert = NSAlert()
-                            alert.messageText = "Error"
-                            alert.informativeText = "An unexpected error occurred: \(error.localizedDescription)"
-                            alert.alertStyle = .warning
-                            alert.addButton(withTitle: "OK")
-                            alert.runModal()
                         }
                     }
                 }

@@ -25,9 +25,9 @@ enum Tone: String, CaseIterable {
         case .romantic:
             return "Transform the following text to be more romantic while keeping the original meaning and language:"
         case .gaslighting:
-            return "Transform the following text to be more gaslighting and manipulative, making the recipient question their reality while keeping the original meaning:"
+            return "Transform the following text to be more gaslighting and manipulative, making the recipient question their reality while keeping the original meaning and language:"
         case .motivational:
-            return "Transform the following text to be extremely motivational and inspiring, using powerful and energetic language while keeping the original meaning:"
+            return "Transform the following text to be extremely motivational and inspiring, using powerful and energetic language while keeping the original meaning and language:"
         }
     }
 } 
