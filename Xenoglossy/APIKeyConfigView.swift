@@ -7,7 +7,7 @@ struct APIKeyConfigView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("Select LLM Model")
+            Text("Select Model")
                 .font(.headline)
             
             VStack(alignment: .leading, spacing: 10) {
