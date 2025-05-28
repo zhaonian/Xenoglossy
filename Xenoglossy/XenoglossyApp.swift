@@ -16,12 +16,11 @@ struct XenoglossyApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject private var llmManager = LLMManager.shared
     @StateObject private var appState = AppState.shared
-    @State private var showingAPIKeyConfig = false
     
     var body: some Scene {
         MenuBarExtra("Xenoglossy", systemImage: "wand.and.stars") {
             Button("Change Model") {
-                showConfigWindow()
+                appDelegate.showAPIKeyConfig()
             }
             
             Divider()
@@ -49,23 +48,11 @@ struct XenoglossyApp: App {
             }
         }
     }
-    
-    private func showConfigWindow() {
-        let window = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
-            styleMask: [.titled, .closable],
-            backing: .buffered,
-            defer: false
-        )
-        window.center()
-        window.title = "Xenoglossy Model Configuration"
-        window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
-        window.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
-    }
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    private var configWindow: NSWindow?
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         KeyboardShortcutManager.shared.registerShortcut()
         
@@ -77,11 +64,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             object: nil
         )
         
+        // Create the config window
+        createConfigWindow()
+        
         // Show API key configuration window on launch
         showAPIKeyConfig()
     }
     
-    @objc private func showAPIKeyConfig() {
+    private func createConfigWindow() {
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
             styleMask: [.titled, .closable],
@@ -89,10 +79,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         window.center()
-        window.title = "LLM API Key Configuration"
+        window.title = "Xenoglossy Configuration"
         window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
-        window.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
+        window.isReleasedWhenClosed = false // Keep the window instance alive when closed
+        self.configWindow = window
+    }
+    
+    @objc func showAPIKeyConfig() {
+        if let window = configWindow {
+            window.makeKeyAndOrderFront(nil)
+            NSApp.activate(ignoringOtherApps: true)
+        }
     }
     
     func applicationWillTerminate(_ notification: Notification) {

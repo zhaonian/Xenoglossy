@@ -67,7 +67,7 @@ class KeyboardShortcutManager {
             }
             return
         }
-        
+
         // Select all text
         let keyDown = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: true)
         let keyUp = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: false)
@@ -137,4 +137,4 @@ class KeyboardShortcutManager {
             RemoveEventHandler(handler)
         }
     }
-} 
+}

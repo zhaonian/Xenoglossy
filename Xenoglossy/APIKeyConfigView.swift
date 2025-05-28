@@ -33,9 +33,20 @@ struct APIKeyConfigView: View {
                 .font(.body)
                 .foregroundColor(.secondary)
                 .padding(.bottom)
+            
+            Button(action: {
+                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+            }) {
+                HStack {
+                    Image(systemName: "lock.shield")
+                    Text("Open Accessibility Settings")
+                }
+            }
+            .buttonStyle(.bordered)
+            .help("Open System Settings to grant accessibility permissions")
         }
         .padding()
-        .frame(width: 500, height: 240)
+        .frame(width: 500, height: 280)
     }
 }
 
