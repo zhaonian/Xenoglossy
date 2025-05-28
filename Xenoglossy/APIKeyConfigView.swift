@@ -25,6 +25,11 @@ struct APIKeyConfigView: View {
                 }
             }
             .padding()
+                        
+            Text("Press ⌃ + X (ctrl + X) to transform selected text")
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .padding(.bottom)
         }
         .padding()
         .frame(width: 500, height: 240)
