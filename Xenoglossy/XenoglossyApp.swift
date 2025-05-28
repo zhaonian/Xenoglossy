@@ -68,18 +68,20 @@ struct XenoglossyApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         KeyboardShortcutManager.shared.registerShortcut()
-        AccessibilityManager.shared.checkPermissions()
         
         // Set up notification observer
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(handleShowAPIKeyConfig),
+            selector: #selector(showAPIKeyConfig),
             name: .showAPIKeyConfig,
             object: nil
         )
+        
+        // Show API key configuration window on launch
+        showAPIKeyConfig()
     }
     
-    @objc private func handleShowAPIKeyConfig() {
+    @objc private func showAPIKeyConfig() {
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 400, height: 200),
             styleMask: [.titled, .closable],

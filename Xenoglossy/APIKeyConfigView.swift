@@ -26,8 +26,11 @@ struct APIKeyConfigView: View {
             }
             .padding()
                         
-            Text("Press ⌃ + X (ctrl + X) to transform selected text")
-                .font(.caption)
+            Text("""
+                Select a tone from the menu bar icon. 
+                Use ⌃ + X (ctrl + X) to transform text.
+            """)
+                .font(.body)
                 .foregroundColor(.secondary)
                 .padding(.bottom)
         }
