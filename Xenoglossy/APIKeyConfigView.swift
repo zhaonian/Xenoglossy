@@ -34,16 +34,29 @@ struct APIKeyConfigView: View {
                 .foregroundColor(.secondary)
                 .padding(.bottom)
             
-            Button(action: {
-                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
-            }) {
-                HStack {
-                    Image(systemName: "lock.shield")
-                    Text("Open Accessibility Settings")
+            HStack(spacing: 12) {
+                Button(action: {
+                    NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility")!)
+                }) {
+                    HStack {
+                        Image(systemName: "lock.shield")
+                        Text("Open Accessibility Settings")
+                    }
                 }
+                .buttonStyle(.bordered)
+                .help("Open System Settings to grant accessibility permissions")
+
+                Button(action: {
+                    NSWorkspace.shared.open(URL(string: "https://forms.gle/ReNm5aDBvZG3k57F9")!)
+                }) {
+                    HStack {
+                        Image(systemName: "paperplane")
+                        Text("Send Feedback")
+                    }
+                }
+                .buttonStyle(.bordered)
+                .help("Open Google Form to send feedback")
             }
-            .buttonStyle(.bordered)
-            .help("Open System Settings to grant accessibility permissions")
         }
         .padding()
         .frame(width: 500, height: 280)
