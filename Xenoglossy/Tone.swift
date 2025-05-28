@@ -10,6 +10,8 @@ enum Tone: String, CaseIterable {
     case gaslighting = "Gaslighting"
     case motivational = "Motivational"
     case grammar = "Grammar Check"
+    case genZ = "Gen Z"
+    case boomer = "Boomer"
 
     var prompt: String {
         switch self {
@@ -31,6 +33,10 @@ enum Tone: String, CaseIterable {
             return "Transform the following text to be extremely motivational and inspiring, using powerful and energetic language while keeping the original meaning and language:"
         case .grammar:
             return "Fix grammar and spelling while preserving the original language and meaning:"
+        case .genZ:
+            return "Rewrite the following text in an exaggerated Gen Z style. Use lots of internet slang, memes, abbreviations, and emojis. Make it super playful and dramatic—like a viral TikTok comment."
+        case .boomer:
+            return "Rewrite the following text in an exaggerated Boomer style. Use very formal, old-fashioned, and polite language. Avoid all modern slang. Make it sound like advice from a grandparent."
         }
     }
 } 
