@@ -60,6 +60,14 @@ class KeyboardShortcutManager {
     }
     
     func handleHotKey() {
+        // Check permissions first
+        if !AccessibilityManager.shared.isTrusted() {
+            DispatchQueue.main.async {
+                AccessibilityManager.shared.checkPermissions()
+            }
+            return
+        }
+        
         // Select all text
         let keyDown = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: true)
         let keyUp = CGEvent(keyboardEventSource: source, virtualKey: 0x00, keyDown: false)

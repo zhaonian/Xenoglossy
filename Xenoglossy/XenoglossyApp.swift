@@ -68,6 +68,7 @@ struct XenoglossyApp: App {
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         KeyboardShortcutManager.shared.registerShortcut()
+        AccessibilityManager.shared.checkPermissions()
         
         // Set up notification observer
         NotificationCenter.default.addObserver(
