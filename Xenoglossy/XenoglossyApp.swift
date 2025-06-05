@@ -18,7 +18,7 @@ struct XenoglossyApp: App {
     @StateObject private var appState = AppState.shared
     
     var body: some Scene {
-        MenuBarExtra("Xenoglossy", systemImage: "wand.and.stars") {
+        MenuBarExtra("Instant Tone Changer", systemImage: "wand.and.stars") {
             Button("Change Model") {
                 appDelegate.showAPIKeyConfig()
             }
@@ -79,7 +79,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         window.center()
-        window.title = "Xenoglossy Configuration"
+        window.title = "Instant Tone Changer Configuration"
         window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
         window.isReleasedWhenClosed = false // Keep the window instance alive when closed
         self.configWindow = window
