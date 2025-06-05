@@ -79,7 +79,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             defer: false
         )
         window.center()
-        window.title = "Instant Tone Changer Configuration"
+        window.title = "Instant Tone Changer"
         window.contentView = NSHostingView(rootView: APIKeyConfigView(window: window))
         window.isReleasedWhenClosed = false // Keep the window instance alive when closed
         self.configWindow = window
