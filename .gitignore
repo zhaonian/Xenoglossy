@@ -95,3 +95,4 @@ iOSInjectionProject/
 
 # Configuration files
 Xenoglossy/Config.swift
+Xenoglossy/Config.template.swift

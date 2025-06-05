@@ -19,7 +19,7 @@ struct XenoglossyApp: App {
     
     var body: some Scene {
         MenuBarExtra("Instant Tone Changer", systemImage: "wand.and.stars") {
-            Button("Change Model") {
+            Button("Settings") {
                 appDelegate.showAPIKeyConfig()
             }
             
