@@ -54,6 +54,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var configWindow: NSWindow?
     
     func applicationDidFinishLaunching(_ notification: Notification) {
+        // Hide from Dock but keep in Applications folder
+        NSApp.setActivationPolicy(.accessory)
+        
         KeyboardShortcutManager.shared.registerShortcut()
         
         // Set up notification observer
