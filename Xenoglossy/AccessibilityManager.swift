@@ -22,7 +22,7 @@ class AccessibilityManager {
         let alert = NSAlert()
         alert.messageText = "Accessibility Permission Required"
         alert.informativeText = """
-        Xenoglossy needs accessibility permissions to work. Please grant access in System Settings > Privacy & Security > Accessibility.
+        Instant Tone Changer needs accessibility permissions to work. Please grant access in System Settings > Privacy & Security > Accessibility.
         
         Once granted, you can use ⌃ + X to transform text in any app.
         """
