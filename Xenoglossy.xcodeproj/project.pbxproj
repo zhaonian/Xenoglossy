@@ -29,7 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		59F3324B2DD4121D00E85922 /* Xenoglossy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xenoglossy.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F3324B2DD4121D00E85922 /* Xenoglossy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Xenoglossy.app; path = "Instant Tone Changer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59F332592DD4121E00E85922 /* XenoglossyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XenoglossyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59F332632DD4121E00E85922 /* XenoglossyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XenoglossyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -423,7 +423,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.zluan.Xenoglossy;
 				PRODUCT_NAME = "Instant Tone Changer";
 				REGISTER_APP_GROUPS = YES;
@@ -453,7 +453,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = io.zluan.Xenoglossy;
 				PRODUCT_NAME = "Instant Tone Changer";
 				REGISTER_APP_GROUPS = YES;
