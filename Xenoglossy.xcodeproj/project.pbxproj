@@ -29,7 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		59F3324B2DD4121D00E85922 /* Xenoglossy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Xenoglossy.app; path = "Instant Tone Changer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		59F3324B2DD4121D00E85922 /* Instant Tone Changer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Instant Tone Changer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		59F332592DD4121E00E85922 /* XenoglossyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XenoglossyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		59F332632DD4121E00E85922 /* XenoglossyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XenoglossyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -92,7 +92,7 @@
 		59F3324C2DD4121D00E85922 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				59F3324B2DD4121D00E85922 /* Xenoglossy.app */,
+				59F3324B2DD4121D00E85922 /* Instant Tone Changer.app */,
 				59F332592DD4121E00E85922 /* XenoglossyTests.xctest */,
 				59F332632DD4121E00E85922 /* XenoglossyUITests.xctest */,
 			);
@@ -123,7 +123,7 @@
 				F891F4CC2DE50E7600341662 /* GoogleGenerativeAI */,
 			);
 			productName = "Instant Tone Changer";
-			productReference = 59F3324B2DD4121D00E85922 /* Xenoglossy.app */;
+			productReference = 59F3324B2DD4121D00E85922 /* Instant Tone Changer.app */;
 			productType = "com.apple.product-type.application";
 		};
 		59F332582DD4121E00E85922 /* XenoglossyTests */ = {
@@ -411,7 +411,7 @@
 				CODE_SIGN_ENTITLEMENTS = Xenoglossy/Xenoglossy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = 7368226YQ4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -423,7 +423,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.zluan.Xenoglossy;
 				PRODUCT_NAME = "Instant Tone Changer";
 				REGISTER_APP_GROUPS = YES;
@@ -441,7 +441,7 @@
 				CODE_SIGN_ENTITLEMENTS = Xenoglossy/Xenoglossy.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 36;
 				DEVELOPMENT_TEAM = 7368226YQ4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -453,7 +453,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = io.zluan.Xenoglossy;
 				PRODUCT_NAME = "Instant Tone Changer";
 				REGISTER_APP_GROUPS = YES;
